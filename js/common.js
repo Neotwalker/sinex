@@ -47,4 +47,79 @@ $(function() {
 		});
 	});
 
+	if(innerWidth > 992){
+		$('.main--catalog__wrapper').slick({
+			infinite: true,
+			arrows: false,
+			dots: false, 
+			variableWidth: true,
+			swipeToSlide: true 
+		});
+	}
+	
+
+	$('.main--slider__wrapper').slick({
+		infinite: true,
+		slidesToShow: 4,
+		slidesToScroll: 4,
+		prevArrow: $('.main--slider__prev'),
+		nextArrow: $('.main--slider__next'),
+		// swipe: false,
+		responsive: [
+			{
+				breakpoint: 2049,
+				settings: {
+					slidesToShow: 3,
+					slidesToScroll: 3,
+				}
+			},
+			{
+				breakpoint: 993,
+				settings: {
+					swipe: true,
+					slidesToShow: 2,
+					slidesToScroll: 2,
+				}
+			},
+			{
+				breakpoint: 551,
+				settings: {
+					slidesToShow: 1,
+					slidesToScroll: 1,
+				}
+			},
+		]
+	});
+
+	$('.main--comprehensiveResearch__slider').slick({
+		infinite: false,
+		prevArrow: $('.main--comprehensiveResearch__prev'),
+		nextArrow: $('.main--comprehensiveResearch__next'),
+		slidesToShow: 3,
+		slidesToScroll: 3,
+		responsive: [
+			{
+				breakpoint: 1201,
+				settings: {
+					slidesToShow: 2,
+					slidesToScroll: 2,
+				}
+			},
+			{
+				breakpoint: 993,
+				settings: {
+					slidesToShow: 3,
+					slidesToScroll: 3,
+				}
+			},
+			{
+				breakpoint: 651,
+				settings: {
+					slidesToShow: 2,
+					slidesToScroll: 2,
+				}
+			},
+		]
+	});
+
 });
