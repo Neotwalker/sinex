@@ -57,7 +57,6 @@ $(function() {
 		});
 	}
 	
-
 	$('.main--slider__wrapper').slick({
 		infinite: true,
 		slidesToShow: 4,
@@ -82,7 +81,7 @@ $(function() {
 				}
 			},
 			{
-				breakpoint: 551,
+				breakpoint: 580,
 				settings: {
 					slidesToShow: 1,
 					slidesToScroll: 1,
@@ -120,6 +119,156 @@ $(function() {
 				}
 			},
 		]
+	});
+
+	$('.tests--stock__slider').slick({
+		infinite: false,
+		prevArrow: $('.tests--stock__prev'),
+		nextArrow: $('.tests--stock__next'),
+		slidesToShow: 4,
+		slidesToScroll: 4,
+		responsive: [
+			{
+				breakpoint: 1451,
+				settings: {
+					slidesToShow: 3,
+					slidesToScroll: 3,
+				}
+			},
+			{
+				breakpoint: 1101,
+				settings: {
+					slidesToShow: 2,
+					slidesToScroll: 2,
+				}
+			},
+			{
+				breakpoint: 993,
+				settings: {
+					slidesToShow: 3,
+					slidesToScroll: 3,
+				}
+			},
+			{
+				breakpoint: 821,
+				settings: {
+					slidesToShow: 2,
+					slidesToScroll: 2,
+				}
+			},
+			{
+				breakpoint: 511,
+				settings: {
+					slidesToShow: 1,
+					slidesToScroll: 1,
+				}
+			},
+		]
+	});
+
+
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+	var buttons = document.querySelectorAll('.tests--item__nav button');
+	var blocks = document.querySelectorAll('.tests--item__info--block');
+
+	buttons.forEach(function(button) {
+		button.addEventListener('click', function() {
+			// Удаляем класс active у всех кнопок
+			buttons.forEach(function(btn) {
+				btn.classList.remove('active');
+			});
+			// Добавляем класс active к нажатой кнопке
+			this.classList.add('active');
+
+			var navItem = this.getAttribute('data-nav');
+			blocks.forEach(function(block) {
+				block.classList.remove('active');
+				if (block.getAttribute('data-navItem') === navItem) {
+					block.classList.add('active');
+				}
+			});
+		});
+	});
+
+	document.addEventListener('mouseover', function(event) {
+		const icon = event.target.closest('.tests--banner__question--icon');
+		const info = event.target.closest('.mini--info');
+
+		if (icon) {
+			const infoBlock = icon.parentElement.querySelector('.mini--info');
+			infoBlock.classList.add('active');
+		} else if (!info || !info.classList.contains('active')) {
+			const activeInfo = document.querySelector('.mini--info.active');
+			if (activeInfo) {
+				activeInfo.classList.remove('active');
+			}
+		}
+	});
+
+	document.addEventListener('click', function(event) {
+		const icon = event.target.closest('.tests--banner__question--icon');
+		const info = event.target.closest('.mini--info');
+
+		// Проверяем, было ли нажатие на иконку
+		if (icon) {
+			const infoBlock = icon.parentElement.querySelector('.mini--info');
+			// Переключаем класс active
+			infoBlock.classList.toggle('active');
+		} else {
+			// Если нажатие произошло вне иконки или info, скрываем info
+			const activeInfo = document.querySelector('.mini--info.active');
+			if (activeInfo && !info) {
+				activeInfo.classList.remove('active');
+			}
+		}
+	});
+
+	const smoothHeightQuestion = (itemSelector, buttonSelector, contentSelector) => {
+		const items = document.querySelectorAll(itemSelector);
+	
+		if (!items.length) return;
+	
+		items.forEach(el => {
+			const button = el.querySelector(buttonSelector);
+			const content = el.querySelector(contentSelector);
+	
+			if (el.dataset.open === 'true') { // проверяем значение data-атрибута open у элемента
+				button.classList.add('active') // добавляем класс 'active' в элемент
+				content.style.maxHeight = `${content.scrollHeight}px` // устанавливаем высоту блока с контентом
+			}
+	
+			button.addEventListener('click', () => {
+				if (el.dataset.open !== 'true') {
+					el.dataset.open = 'true';
+					button.classList.add('active');
+					content.style.maxHeight = `${content.scrollHeight}px`;
+				} else {
+					el.dataset.open = 'false';
+					button.classList.remove('active');
+					content.style.maxHeight = '';
+				}
+			})
+	
+			const onResize = () => {
+				if (el.dataset.open === 'true') {
+					if (parseInt(content.style.maxHeight) !== content.scrollHeight) {
+						content.style.maxHeight = `${content.scrollHeight}px`;
+					}
+				}
+			}
+	
+			window.addEventListener('resize', onResize);
+		});
+	}
+	smoothHeightQuestion('.tests--faq__item', '.tests--faq__item--question', '.tests--faq__item--answer'); // вызываем основную функцию smoothHeight и передаем в качестве параметров  необходимые селекторы
+	
+	const testsNavMob = document.querySelector('.tests--nav__mob');
+
+	testsNavMob.addEventListener('click', () => {
+		const testsNavMenu = document.querySelector('.tests--nav__mob .tests--nav');
+		testsNavMenu.classList.toggle('active');
 	});
 
 });
