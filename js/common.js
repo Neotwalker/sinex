@@ -160,6 +160,7 @@ $(function() {
 				breakpoint: 481,
 				settings: {
 					slidesToShow: 1,
+					slidesToScroll: 1,
 					variableWidth: true,
 					arrows: false,
 				}
