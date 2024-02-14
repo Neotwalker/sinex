@@ -171,6 +171,7 @@ $(function() {
 	$('.tests--item__nav').slick({
 		infinite: false,
 		slidesToShow: 1,
+		slidesToScroll: 1,
 		variableWidth: true,
 		arrows: false,
 	});
