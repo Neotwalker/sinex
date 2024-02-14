@@ -157,13 +157,21 @@ $(function() {
 				}
 			},
 			{
-				breakpoint: 511,
+				breakpoint: 481,
 				settings: {
 					slidesToShow: 1,
-					slidesToScroll: 1,
+					variableWidth: true,
+					arrows: false,
 				}
 			},
 		]
+	});
+
+	$('.tests--item__nav').slick({
+		infinite: false,
+		slidesToShow: 1,
+		variableWidth: true,
+		arrows: false,
 	});
 
 
