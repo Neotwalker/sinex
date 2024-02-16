@@ -174,6 +174,14 @@ $(function() {
 		slidesToScroll: 1,
 		variableWidth: true,
 		arrows: false,
+		// responsive: [
+		// 	{
+		// 		breakpoint: 481,
+		// 		settings: {
+		// 			infinite: true,
+		// 		}
+		// 	},
+		// ]
 	});
 
 
@@ -185,20 +193,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	buttons.forEach(function(button) {
 		button.addEventListener('click', function() {
-			// Удаляем класс active у всех кнопок
-			buttons.forEach(function(btn) {
-				btn.classList.remove('active');
-			});
-			// Добавляем класс active к нажатой кнопке
-			this.classList.add('active');
+				// Удаляем класс active у всех кнопок
+				buttons.forEach(function(btn) {
+						btn.classList.remove('active');
+				});
+				// Добавляем класс active к нажатой кнопке
+				this.classList.add('active');
 
-			var navItem = this.getAttribute('data-nav');
-			blocks.forEach(function(block) {
-				block.classList.remove('active');
-				if (block.getAttribute('data-navItem') === navItem) {
-					block.classList.add('active');
-				}
-			});
+				var navItem = this.getAttribute('data-nav');
+				blocks.forEach(function(block) {
+						block.classList.remove('active');
+						if (block.getAttribute('data-navItem') === navItem) {
+								block.classList.add('active');
+						}
+				});
+
+				// Находим индекс кнопки и смещаем слайд в левый край
+				var index = parseInt(navItem) - 1;
+				$('.tests--item__nav').slick('slickGoTo', index);
 		});
 	});
 
