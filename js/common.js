@@ -175,10 +175,6 @@ $(function() {
 		arrows: false,
 	});
 
-	var swiper = new Swiper(".tests--item__nav", {
-
-	});
-
 });
 
 document.addEventListener('DOMContentLoaded', function() {
