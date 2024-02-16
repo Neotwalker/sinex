@@ -170,20 +170,14 @@ $(function() {
 
 	$('.tests--item__nav').slick({
 		infinite: false,
-		slidesToShow: 1,
-		slidesToScroll: 1,
 		variableWidth: true,
+		swipeToSlide: true,
 		arrows: false,
-		// responsive: [
-		// 	{
-		// 		breakpoint: 481,
-		// 		settings: {
-		// 			infinite: true,
-		// 		}
-		// 	},
-		// ]
 	});
 
+	var swiper = new Swiper(".tests--item__nav", {
+
+	});
 
 });
 
