@@ -278,9 +278,11 @@ document.addEventListener('DOMContentLoaded', function() {
 	
 	const testsNavMob = document.querySelector('.tests--nav__mob');
 
-	testsNavMob.addEventListener('click', () => {
-		const testsNavMenu = document.querySelector('.tests--nav__mob .tests--nav');
-		testsNavMenu.classList.toggle('active');
-	});
+	if (testsNavMob){
+		testsNavMob.addEventListener('click', () => {
+			const testsNavMenu = document.querySelector('.tests--nav__mob .tests--nav');
+			testsNavMenu.classList.toggle('active');
+		});
+	}
 
 });
