@@ -1,12 +1,12 @@
 $(function() {
 
 	// Получаем ссылки
-	var linksArticle = document.querySelectorAll('.main--image__menu a');
+	let linksArticle = document.querySelectorAll('.main--image__menu a');
 
 	// Обходим все ссылки
 	linksArticle.forEach(function(link) {
 		// Получаем id целевого блока
-		var targetId = link.getAttribute('href');
+		let targetId = link.getAttribute('href');
 
 		// Назначаем обработчик события клика на ссылку
 		link.addEventListener('click', function(e) {
@@ -14,12 +14,12 @@ $(function() {
 			e.preventDefault();
 
 			// Получаем целевой блок по его id
-			var target = document.querySelector(targetId);
+			let target = document.querySelector(targetId);
 
 			// Проверяем, что целевой блок существует
 			if (target) {
 				// Вычисляем позицию целевого блока относительно верха страницы
-				var offsetTop = target.offsetTop;
+				let offsetTop = target.offsetTop;
 
 				// Скроллируем страницу до целевого блока
 				if (window.innerWidth > 992) {
@@ -168,41 +168,84 @@ $(function() {
 		]
 	});
 
-	$('.tests--item__nav').slick({
-		infinite: false,
-		variableWidth: true,
-		swipeToSlide: true,
-		arrows: false,
+	let buttons = document.querySelectorAll('.tests--item__nav button');
+	let blocks = document.querySelectorAll('.tests--item__info--block');
+	let slickNav;
+	
+	if (innerWidth > 1280){
+			slickNav = $('.tests--item > .tests--item__nav').slick({
+					infinite: false,
+					variableWidth: true,
+					swipeToSlide: true,
+					arrows: false,
+			});
+	} else {
+			slickNav = $('.tests--item__mob .tests--item__nav').slick({
+					infinite: false,
+					variableWidth: true,
+					swipeToSlide: true,
+					arrows: false,
+			});
+	}
+	
+	buttons.forEach(function(button) {
+    // Для десктопов
+    button.addEventListener('click', function() {
+        handleNavigation(this);
+    });
+    
+    // Для мобильных устройств
+    let startX, startY;
+    button.addEventListener('touchstart', function(event) {
+        startX = event.touches[0].clientX;
+        startY = event.touches[0].clientY;
+    });
+
+    button.addEventListener('touchend', function(event) {
+        let endX = event.changedTouches[0].clientX;
+        let endY = event.changedTouches[0].clientY;
+        let distanceX = Math.abs(endX - startX);
+        let distanceY = Math.abs(endY - startY);
+
+        // Проверяем, было ли это действие кликом
+        if (distanceX < 10 && distanceY < 10) {
+            // Если это был клик, обрабатываем нажатие
+            event.preventDefault(); // Предотвращаем стандартное поведение при касании
+            handleNavigation(this);
+        }
+    });
 	});
+
+	function handleNavigation(clickedButton) {
+		let currentIndex = parseInt(clickedButton.getAttribute('data-nav')) - 1;
+		
+		// Удаляем класс active у всех кнопок
+		buttons.forEach(function(btn) {
+			btn.classList.remove('active');
+		});
+
+		// Добавляем класс active к нажатой кнопке
+		clickedButton.classList.add('active');
+
+		// Перемещаем слайды, чтобы текущая кнопка оказалась в левом краю
+		slickNav.slick('slickGoTo', currentIndex);
+
+		// Удаляем класс "slick-current" у всех слайдов
+		blocks.forEach(function(block) {
+			block.classList.remove('active');
+			block.classList.remove('slick-current');
+			block.classList.remove('slick-active');
+		});
+		
+		// Добавляем класс "slick-current" к текущему слайду
+		blocks[currentIndex].classList.add('active');
+		blocks[currentIndex].classList.add('slick-active');
+		blocks[currentIndex].classList.add('slick-current');
+	}
 
 });
 
 document.addEventListener('DOMContentLoaded', function() {
-	var buttons = document.querySelectorAll('.tests--item__nav button');
-	var blocks = document.querySelectorAll('.tests--item__info--block');
-
-	buttons.forEach(function(button) {
-		button.addEventListener('click', function() {
-				// Удаляем класс active у всех кнопок
-				buttons.forEach(function(btn) {
-						btn.classList.remove('active');
-				});
-				// Добавляем класс active к нажатой кнопке
-				this.classList.add('active');
-
-				var navItem = this.getAttribute('data-nav');
-				blocks.forEach(function(block) {
-						block.classList.remove('active');
-						if (block.getAttribute('data-navItem') === navItem) {
-								block.classList.add('active');
-						}
-				});
-
-				// Находим индекс кнопки и смещаем слайд в левый край
-				var index = parseInt(navItem) - 1;
-				$('.tests--item__nav').slick('slickGoTo', index);
-		});
-	});
 
 	document.addEventListener('mouseover', function(event) {
 		const icon = event.target.closest('.tests--banner__question--icon');
