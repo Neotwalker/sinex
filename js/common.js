@@ -172,7 +172,7 @@ $(function() {
 	let blocks = document.querySelectorAll('.tests--item__info--block');
 	let slickNav;
 	
-	if (innerWidth > 1280){
+	if (innerWidth > 1280 && innerWidth < 1751){
 			slickNav = $('.tests--item > .tests--item__nav').slick({
 					infinite: false,
 					variableWidth: true,
