@@ -173,19 +173,21 @@ $(function() {
 	let slickNav;
 	
 	if (innerWidth > 1280 && innerWidth < 1751){
-			slickNav = $('.tests--item > .tests--item__nav').slick({
-					infinite: false,
-					variableWidth: true,
-					swipeToSlide: true,
-					arrows: false,
-			});
-	} else {
-			slickNav = $('.tests--item__mob .tests--item__nav').slick({
-					infinite: false,
-					variableWidth: true,
-					swipeToSlide: true,
-					arrows: false,
-			});
+		slickNav = $('.tests--item > .tests--item__nav').slick({
+			infinite: false,
+			variableWidth: true,
+			swipeToSlide: true,
+			arrows: false,
+		});
+	} else if (innerWidth <= 1280) {
+		$('.tests--item > .tests--item__nav').remove();
+		$('.tests--item > .tests--item__info').remove();
+		slickNav = $('.tests--item__mob .tests--item__nav').slick({
+			infinite: false,
+			variableWidth: true,
+			swipeToSlide: true,
+			arrows: false,
+		});
 	}
 	
 	buttons.forEach(function(button) {
@@ -227,20 +229,26 @@ $(function() {
 		// Добавляем класс active к нажатой кнопке
 		clickedButton.classList.add('active');
 
-		// Перемещаем слайды, чтобы текущая кнопка оказалась в левом краю
-		slickNav.slick('slickGoTo', currentIndex);
+		if (innerWidth < 1751){
+			// Перемещаем слайды, чтобы текущая кнопка оказалась в левом краю
+			slickNav.slick('slickGoTo', currentIndex);
+		}
 
 		// Удаляем класс "slick-current" у всех слайдов
 		blocks.forEach(function(block) {
 			block.classList.remove('active');
-			block.classList.remove('slick-current');
-			block.classList.remove('slick-active');
+			if (innerWidth < 1751){
+				block.classList.remove('slick-current');
+				block.classList.remove('slick-active');
+			}
 		});
 		
 		// Добавляем класс "slick-current" к текущему слайду
 		blocks[currentIndex].classList.add('active');
-		blocks[currentIndex].classList.add('slick-active');
-		blocks[currentIndex].classList.add('slick-current');
+		if (innerWidth < 1751){
+			blocks[currentIndex].classList.add('slick-active');
+			blocks[currentIndex].classList.add('slick-current');
+		}
 	}
 
 });
